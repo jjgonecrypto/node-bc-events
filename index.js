@@ -44,7 +44,7 @@ whenTokensLoaded.then(tokens => {
   else address = tokens.find(({ symbol }) => symbol === tokenSymbol).address;
 
   ora({ text: gray(`Listening for ${tokenSymbol} ${tokenSymbol !== address ? `logs (${address})` : ''}`), spinner: 'rainbow' }).start();
-  provider.on({address}, log => {
+  provider.on({ address }, log => {
     console.log(util.inspect(log));
   });
 }).catch(err => {
