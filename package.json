@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^5.6.1",
     "ethers": "^4.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "jest": "^23.6.0"
   }
 }
