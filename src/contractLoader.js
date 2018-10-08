@@ -2,11 +2,9 @@
 
 const https = require('https');
 const fs =require('fs');
-const util =require('util');
 const ora = require('ora');
 
-const { getDefaultProvider } = require('ethers');
-const { gray, green, red } = require('chalk');
+const { gray, green } = require('chalk');
 
 const listOfTokens = 'https://raw.githubusercontent.com/kvhnuke/etherwallet/v3.22.3/app/scripts/tokens/ethTokens.json';
 
