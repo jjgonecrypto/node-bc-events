@@ -1,17 +1,19 @@
 'use strict';
 
 const https = require('https');
-const fs =require('fs');
+const fs = require('fs');
+const path = require('path');
 const ora = require('ora');
 
 const { gray, green } = require('chalk');
 
-const listOfTokens = 'https://raw.githubusercontent.com/kvhnuke/etherwallet/v3.22.3/app/scripts/tokens/ethTokens.json';
+const listOfTokens =
+  'https://raw.githubusercontent.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json';
 
-const PATH_TO_TOKEN_JSON = '../tokens.json';
+const PATH_TO_TOKEN_JSON = path.join(__dirname, '..', 'tokens.json');
 
 module.exports = {
-  loadContractFromSymbol: (tokenSymbol) => {
+  loadContractFromSymbol: tokenSymbol => {
     const whenTokensLoaded = new Promise((resolve, reject) => {
       if (fs.existsSync(PATH_TO_TOKEN_JSON)) {
         console.log(gray('Opening local file for reading.'));
@@ -21,25 +23,31 @@ module.exports = {
         });
         return;
       }
-      const spinner = ora({ text: gray('Downloading list of ERC20 token contracts'), spinner: 'shark' }).start();
+      const spinner = ora({
+        text: gray('Downloading list of ERC20 token contracts'),
+        spinner: 'shark'
+      }).start();
 
-      https.get(listOfTokens, response => {
-        let content = '';
+      https
+        .get(listOfTokens, response => {
+          let content = '';
 
-        response.on('data', d => {
-          content += d.toString();
-        }).on('end', () => {
-          process.stdout.write(green(' Complete.\n'));
-          spinner.stop();
-          fs.writeFileSync(PATH_TO_TOKEN_JSON, content);
-          resolve(JSON.parse(content));
-        });
-      }).on('error', reject);
+          response
+            .on('data', d => {
+              content += d.toString();
+            })
+            .on('end', () => {
+              process.stdout.write(green(' Complete.\n'));
+              spinner.stop();
+              fs.writeFileSync(PATH_TO_TOKEN_JSON, content);
+              resolve(JSON.parse(content));
+            });
+        })
+        .on('error', reject);
     });
 
-    return whenTokensLoaded.then(tokens => tokens.find(({ symbol }) => symbol === tokenSymbol).address);
-
+    return whenTokensLoaded.then(
+      tokens => tokens.find(({ symbol }) => symbol === tokenSymbol).address
+    );
   }
 };
-
-
