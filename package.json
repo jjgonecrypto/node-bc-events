@@ -13,10 +13,11 @@
   "dependencies": {
     "abi-decoder": "1.2.0",
     "chalk": "~2.4.1",
+    "commander": "2.20.0",
     "dotenv-safe": "~6.0.0",
     "ethers": "4.0.27",
     "node-fetch": "~2.2.0",
-    "ora": "~3.0.0",
+    "ora": "3.4.0",
     "synthetix": "2.4.1"
   },
   "devDependencies": {
